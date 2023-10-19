@@ -1,22 +1,33 @@
 <template>
-    <div>{{ currentTime }}</div>
-    <select v-model="city" @change="cityChange">
+    <form class="form">
+        <div>{{ currentTime }}</div>
+        <user-select v-model="city" @change="cityChange">
+            <option class="option" v-for="city in citiesList" :key="city">{{ city }}</option>
+        </user-select>
+        <!-- <select v-model="city" @change="cityChange">
         <option v-for="city in citiesList" :key="city">{{ city }}</option>
-    </select>
-    <select v-model="department" @change="departmentChange">
-        <option v-for="department in departmentList" :key="department">{{ department }}</option>
-    </select>
-    <select v-model="employee">
-        <option v-for="employee in staffList" :key="employee">{{ employee }}</option>
-    </select>
-    <div>Бригада: {{ getBrigade }}</div>
-    <button @click="postData">Отправить</button>
+    </select> -->
+        <user-select v-model="department" @change="departmentChange">
+            <option v-for="department in departmentList" :key="department">{{ department }}</option>
+        </user-select>
+        <user-select v-model="employee">
+            <option v-for="employee in staffList" :key="employee">{{ employee }}</option>
+        </user-select>
+        <div class="form-content">Бригада: {{ getBrigade }}</div>
+        <user-button @click="postData">Отправить</user-button>
+    </form>
 </template>
 
 <script>
-import { establishmentList } from "@/constants/data.js"
-import { sendData } from "@/API/services.js"
+import { establishmentList } from "@/constants/data.js";
+import { sendData } from "@/API/services.js";
+import UserButton from "./UI/UserButton.vue";
+import UserSelect from "./UI/UserSelect.vue";
+
 export default {
+    components: {
+        UserButton, UserSelect
+    },
     data() {
         return {
             allData: establishmentList,
@@ -109,4 +120,22 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    align-items: center;
+    width: 90%;
+    font-family: 'Primary', Courier, monospace;
+}
+
+.form select {
+    width: 50%;
+}
+
+option {
+    padding: 10px;
+    text-align: center;
+}
+</style>
