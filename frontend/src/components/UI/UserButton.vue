@@ -28,5 +28,11 @@ export default {
 .btn:hover {
     color: aqua;
     box-shadow: 0 0 5px 8px rgba(0, 195, 195, 0.9);
+    transform: scale(1.05, 1.05);
+}
+
+.btn:active {
+    box-shadow: 0 0 3px 5px rgba(0, 135, 135, 0.8);
+    color: brown;
 }
 </style>

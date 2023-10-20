@@ -44,4 +44,8 @@ export default {
     padding: 10px;
     text-align: center;
 }
+
+.select:hover {
+    background-color: rgba(0, 195, 195, 0.8);
+}
 </style>
