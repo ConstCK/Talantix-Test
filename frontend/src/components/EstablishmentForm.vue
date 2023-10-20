@@ -4,14 +4,11 @@
         <user-select v-model="city" @change="cityChange">
             <option class="option" v-for="city in citiesList" :key="city">{{ city }}</option>
         </user-select>
-        <!-- <select v-model="city" @change="cityChange">
-        <option v-for="city in citiesList" :key="city">{{ city }}</option>
-    </select> -->
-        <user-select v-model="department" @change="departmentChange">
+        <user-select v-model="department" @change="departmentChange" :class="{ disabled: city.length == 0 }">
             <option v-for="department in departmentList" :key="department">{{ department }}</option>
         </user-select>
-        <user-select v-model="employee">
-            <option v-for="employee in staffList" :key="employee">{{ employee }}</option>
+        <user-select v-model="employee" :class="{ disabled: city.length == 0 || department.length == 0 }">
+            <option v-for=" employee  in  staffList " :key="employee">{{ employee }}</option>
         </user-select>
         <div class="form-content">Бригада: {{ getBrigade }}</div>
         <user-button @click="postData">Отправить</user-button>
@@ -38,7 +35,7 @@ export default {
             city: "",
             department: "",
             employee: "",
-            brigade: null,
+            brigade: 0,
             time: new Date()
         }
     },
@@ -49,9 +46,13 @@ export default {
             this.departmentList = []
             this.staffList = []
 
-            dataPool = this.allData.filter((el) => {
-                return el.city == event.target.value
-            })
+            if (event.target.value == "") {
+                dataPool = this.allData
+            } else {
+                dataPool = this.allData.filter((el) => {
+                    return el.city == event.target.value
+                })
+            }
             dataPool.forEach((el) => {
                 let deps = el.department
                 deps.forEach((el) => {
@@ -77,9 +78,12 @@ export default {
                 deps.forEach((el) => {
                     if (el.name == event.target.value) {
                         this.staffList.push(...el.staff)
+                        this.city = this.selectedCity
                     }
                 })
             })
+
+
         },
         postData() {
             this.$cookies.set("city", this.city)
@@ -107,8 +111,9 @@ export default {
         }
     },
     mounted() {
-        this.dataPool = establishmentList
-        this.dataPool.forEach((el) => {
+        let dataPool = null;
+        dataPool = establishmentList
+        dataPool.forEach((el) => {
             this.citiesList.push(el.city)
             let deps = [...el.department]
             deps.forEach((el) => {
@@ -125,9 +130,13 @@ export default {
     display: flex;
     flex-direction: column;
     margin: 50px auto;
+    padding: 30px;
     align-items: center;
     width: 90%;
     font-family: 'Primary', Courier, monospace;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 5px 10px rgba(20, 20, 20, 0.1);
+    border: 1px teal solid;
 }
 
 .form select {
@@ -137,5 +146,10 @@ export default {
 option {
     padding: 10px;
     text-align: center;
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, .1);
 }
 </style>

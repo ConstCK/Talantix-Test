@@ -21,6 +21,7 @@ export default {
     },
     methods: {
         updateSelect(event) {
+            console.log(event.target.value)
             this.$emit("update:modelValue", event.target.value)
         }
     }

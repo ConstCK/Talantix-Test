@@ -5,5 +5,5 @@ from .models import Establishment
 
 class EstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = "__all__"
+        fields = ["city", "department", "employee", "brigade"]
         model = Establishment

@@ -4,9 +4,12 @@ BackEnd:
 
 Создайте виртуальное окружение (python -m venv venv) и активируйте его (venv\scripts\activate)
 Установите все зависимости при помощи pip install -r requirements.txt в терминале
-Создайте файл .env в каталоге проекта и пропишите в нем SECRET_KEY, NAME, USER, PASSWORD для использования БД
+Создайте файл .env в каталоге проекта и пропишите в нем (по примеру .env.example) SECRET_KEY, NAME, USER, PASSWORD для использования БД
 SECRET_KEY ключ для Django можно сгенерировать по пути https://djecrety.ir/
 Запустите сервер из каталога проекта (python manage.py runserver)
+
+Примечание:
+На ПК должна быть запучена MSSQL БД
 
 FrontEnd:
 
